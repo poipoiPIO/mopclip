@@ -40,6 +40,14 @@ structure Combinators = struct
     end in Parser inner
   end;
 
+  fun errorC (label: string) (p: 'a parser) = Parser (fn s => 
+    let val p_result = runParser p s in  
+      case p_result of
+         Failure e => label ^ " :: " ^ e |> Failure 
+       | Success _ => p_result
+    end
+  );
+
   infix mapP    fun p1 mapP p2 = mapP_postfix p1 p2;
   infix orElse  fun p1 orElse p2 = orElse_postfix p1 p2;
   infix andThen fun p1 andThen p2 = andThen_postfix p1 p2;
