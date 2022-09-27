@@ -72,6 +72,21 @@ structure Combinators = struct
     end
   );
 
+  fun bind (p: 'b parser) (f: ('b -> 'a parser)) =
+  Parser (fn s =>
+    let val p1_result = runParser p s in
+      case p1_result of
+         Failure e => Failure e
+       | Success (r, i) => runParser (f r) i
+    end
+  );
+
+  fun pass_bind (p1: 'b parser) (p2: 'a parser) : 'a parser =
+    bind p1 (fn _ => p2)  
+
+  fun return (a: 'a) : 'a parser = 
+    Parser (fn i => Success (a, i));
+
   infix mapP    fun p1 mapP p2 = mapP_postfix p1 p2;
   infix orElse  fun p1 orElse p2 = orElse_postfix p1 p2;
   infix andThen fun p1 andThen p2 = andThen_postfix p1 p2;
