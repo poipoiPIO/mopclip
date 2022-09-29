@@ -41,4 +41,8 @@ structure Parsers = struct
   end
 
   fun stringP (s:string) = mapP(explode s |> map charP |> sequenceP, implode)
+
+  val lowerCharP = anyOf $ explode "abcdefghijklmnopqrstuvwxyz";
+  val upperCharP = anyOf $ explode "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  val anyCharP = orElse_postfix lowerCharP upperCharP
 end;
