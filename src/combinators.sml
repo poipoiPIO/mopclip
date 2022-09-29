@@ -104,6 +104,12 @@ structure Combinators = struct
      end
   );
 
+  fun sepByC p s = 
+    mapP_postfix
+      (andThen_postfix
+        (manyC (left_applicative p s))
+        p)
+      (fn (xs,x) => rev(x::(rev xs)));
 
   infix mapP    fun p1 mapP p2 = mapP_postfix p1 p2;
   infix orElse  fun p1 orElse p2 = orElse_postfix p1 p2;
