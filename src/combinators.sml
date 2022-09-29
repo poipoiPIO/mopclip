@@ -2,7 +2,7 @@ structure Combinators = struct
   open Helpers;
   open Types;
 
-  fun andThen_postfix (p1: 'a parser) (p2: 'a parser) =
+  fun andThen_postfix (p1: 'a parser) (p2: 'b parser) =
     let fun inner input =
       let val firstRes = runParser p1 input in
         case firstRes of 
@@ -30,12 +30,12 @@ structure Combinators = struct
     let fun inner input = let
       val firstRes = runParser p1 input in
         case firstRes of 
-           Success _ => firstRes 
+           Success (r, rs) => firstRes  
          | Failure err => let
             val secondRes = runParser p2 input in
             case secondRes of 
                Failure err => Failure err
-             | Success _ => secondRes
+             | Success (r,rs) => secondRes
           end
     end in Parser inner
   end;
@@ -49,26 +49,29 @@ structure Combinators = struct
     end
   );
 
-  fun left_applicative (p1: 'a parser) (p2: 'a parser) = 
+  fun left_applicative (p1: 'a parser) (p2: 'b parser) = 
   Parser (fn s =>
     let val p1_result = runParser p1 s in
       case p1_result of
-          Failure _ => p1_result
+          Failure e => Failure e
         | Success (p1_res, rest) => let
           val p2_result = runParser p2 rest in 
             case p2_result of
-                Failure _ => p2_result
+                Failure e => Failure e
               | Success (_, rest) => Success (p1_res, rest) 
           end
     end
   );
 
-  fun right_applicative (p1: 'a parser) (p2: 'a parser) = 
+  fun right_applicative (p1: 'a parser) (p2: 'b parser) = 
   Parser (fn s =>
     let val p1_result = runParser p1 s in
       case p1_result of
-          Failure _ => p1_result
-        | Success (_, rest) => runParser p2 rest
+          Failure e => Failure e 
+        | Success (_, rest) =>
+            case runParser p2 rest of
+               Failure e => Failure e 
+             | Success (r, rs) => Success (r, rs)  
     end
   );
 
@@ -86,6 +89,21 @@ structure Combinators = struct
 
   fun return (a: 'a) : 'a parser = 
     Parser (fn i => Success (a, i));
+
+  fun manyC (p: 'a parser): 'a list parser = Parser (fn i =>
+  let val xs = ref []
+      fun loop input =
+        case runParser p input of
+           Success (r, rest) => ( 
+             xs := r :: !xs;
+             loop rest
+           )
+         | Failure _ => input
+      val rest = loop i in
+        Success (rev (!xs), rest) 
+     end
+  );
+
 
   infix mapP    fun p1 mapP p2 = mapP_postfix p1 p2;
   infix orElse  fun p1 orElse p2 = orElse_postfix p1 p2;
