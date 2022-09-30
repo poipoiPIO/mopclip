@@ -1,3 +1,20 @@
+open Helpers;
+open Types;
+open Combinators;
+
+signature PARSERS = sig
+  val charP : char -> char parser
+  val choice : 'a parser list -> 'a parser
+  val anyOf : char list -> char parser
+  val digitP : char parser
+  val concatRes : 'a list parser -> 'a list parser -> 'a list parser
+  val sequenceP : 'a parser list -> 'a list parser
+  val stringP : string -> string parser
+  val lowerCharP : char parser
+  val upperCharP : char parser
+  val anyCharP : char parser
+end
+
 structure Parsers = struct
   open Helpers;
   open Types;

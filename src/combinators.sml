@@ -1,4 +1,25 @@
-structure Combinators = struct
+open Types;
+
+signature COMBINATORS = sig
+  val andThen_postfix : 'a parser -> 'b parser -> ('a * 'b) parser
+  val mapP_postfix : 'a parser -> ('a -> 'b) -> 'b parser
+  val orElse_postfix : 'a parser -> 'a parser -> 'a parser
+  val errorC : string -> 'a parser -> 'a parser
+  val left_applicative : 'a parser -> 'b parser -> 'a parser
+  val right_applicative : 'a parser -> 'b parser -> 'b parser
+  val bind : 'a parser -> ('a -> 'b parser) -> 'b parser
+  val pass_bind : 'a parser -> 'b parser -> 'b parser
+  val return : 'a -> 'a parser
+  val manyC : 'a parser -> 'a list parser
+  val sepByC : 'a parser -> 'b parser -> 'a list parser
+  val mapP : 'a parser * ('a -> 'b) -> 'b parser
+  val orElse : 'a parser * 'a parser -> 'a parser
+  val andThen : 'a parser * 'b parser -> ('a * 'b) parser
+  val *> : 'a parser * 'b parser -> 'b parser
+  val <* : 'a parser * 'b parser -> 'a parser 
+end;
+
+structure Combinators :> COMBINATORS = struct
   open Helpers;
   open Types;
 
