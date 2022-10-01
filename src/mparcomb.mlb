@@ -3,19 +3,11 @@
 $(SML_LIB)/basis/basis.mlb
 
 (* programm files*)
-helpers.sml
-types.sml
-
 local
+  helpers.sml
+  types.sml
   combinators.sml 
-in
-  signature COMBINATORS
-  structure Combinators
-end
-
-local
   parsers.sml
 in
-  signature PARSERS
-  structure Parsers
+  lib.sml
 end

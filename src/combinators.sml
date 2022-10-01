@@ -12,11 +12,6 @@ signature COMBINATORS = sig
   val return : 'a -> 'a parser
   val manyC : 'a parser -> 'a list parser
   val sepByC : 'a parser -> 'b parser -> 'a list parser
-  val mapP : 'a parser * ('a -> 'b) -> 'b parser
-  val orElse : 'a parser * 'a parser -> 'a parser
-  val andThen : 'a parser * 'b parser -> ('a * 'b) parser
-  val *> : 'a parser * 'b parser -> 'b parser
-  val <* : 'a parser * 'b parser -> 'a parser 
 end;
 
 structure Combinators :> COMBINATORS = struct
@@ -132,10 +127,5 @@ structure Combinators :> COMBINATORS = struct
         p)
       (fn (xs,x) => rev(x::(rev xs)));
 
-  infix mapP    fun p1 mapP p2 = mapP_postfix p1 p2;
-  infix orElse  fun p1 orElse p2 = orElse_postfix p1 p2;
-  infix andThen fun p1 andThen p2 = andThen_postfix p1 p2;
-  infix *>      fun p1 *> p2 = right_applicative p1 p2;
-  infix <*      fun p1 <* p2 = left_applicative p1 p2;
 end;
 

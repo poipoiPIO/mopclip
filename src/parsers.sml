@@ -15,7 +15,7 @@ signature PARSERS = sig
   val anyCharP : char parser
 end
 
-structure Parsers = struct
+structure Parsers :> PARSERS = struct
   open Helpers;
   open Types;
   open Combinators;
@@ -50,14 +50,14 @@ structure Parsers = struct
   end;
 
   fun concatRes (p1: 'a list parser) (p2: 'a list parser) =
-    mapP ((andThen (p1, p2)), (fn (l1, l2) => l1 @ l2));
+    mapP_postfix (andThen_postfix p1 p2) (fn (l1, l2) => l1 @ l2);
 
   fun sequenceP (parsers: 'a parser list) = 
   let fun singleton e = [e] in
-    parsers |> map (fn p => mapP (p, singleton)) |> reduce concatRes
+    parsers |> map (fn p => mapP_postfix p singleton) |> reduce concatRes
   end
 
-  fun stringP (s:string) = mapP(explode s |> map charP |> sequenceP, implode)
+  fun stringP (s:string) = mapP_postfix (explode s |> map charP |> sequenceP) implode
 
   val lowerCharP = anyOf $ explode "abcdefghijklmnopqrstuvwxyz";
   val upperCharP = anyOf $ explode "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

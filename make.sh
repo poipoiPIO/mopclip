@@ -1,6 +1,6 @@
 if [ $1 == "--interactive" ]
 then
-  rlwrap smlnj src/helpers.sml src/types.sml src/combinators.sml src/parsers.sml
+  rlwrap smlnj src/helpers.sml src/types.sml src/combinators.sml src/parsers.sml src/lib.sml
 fi
 
 if [ $1 == "--mlb" ] 
