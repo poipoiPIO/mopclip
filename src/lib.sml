@@ -8,7 +8,7 @@ infix sepBy   fun p1 sepBy p2   = Combinators.sepByC p1 p2;
 infix *>      fun p1 *> p2      = Combinators.right_applicative p1 p2;
 infix <*      fun p1 <* p2      = Combinators.left_applicative p1 p2;
 
-structure Mparcombi = struct
+structure Mopclip = struct
   open Helpers;
   open Types;
   open Parsers;
