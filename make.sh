@@ -5,7 +5,7 @@ fi
 
 if [ $1 == "--mlb" ] 
 then
-  ./third-party/sml-buildscripts/smlrepl src/mparcomb.mlb
+  ./third-party/sml-buildscripts/smlrepl src/mopclip.mlb
 else
-  mlton -output ./o.out src/mparcomb.mlb 
+  mlton -output ./o.out src/mopclip.mlb 
 fi
