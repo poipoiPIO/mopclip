@@ -11,7 +11,9 @@ signature COMBINATORS = sig
   val pass_bind : 'a parser -> 'b parser -> 'b parser
   val return : 'a -> 'a parser
   val manyC : 'a parser -> 'a list parser
+  val many1C : 'a parser -> 'a list parser
   val sepByC : 'a parser -> 'b parser -> 'a list parser
+  val sepBy1C : 'a parser -> 'b parser -> 'a list parser
 end;
 
 structure Combinators :> COMBINATORS = struct
@@ -120,12 +122,27 @@ structure Combinators :> COMBINATORS = struct
      end
   );
 
+  fun many1C p = mapP_postfix
+    (andThen_postfix p (manyC p))
+    (fn (pr, mr) => [pr] @ mr);
+
   fun sepByC p s = 
-    mapP_postfix
-      (andThen_postfix
+    (bind (manyC (left_applicative p s)) 
+      (fn r => 
+        case r of
+          [] => Parser (fn i => Success (r, i))
+         | _ => mapP_postfix p (fn pr => r @ [pr])))
+
+  fun sepBy1C p s =
+    (* TODO:: This must be a bug!
+      I don't really sure soo, but
+      this implementation looks
+      kinda wierd and buggie *)
+    mapP_postfix 
+      (andThen_postfix 
         (manyC (left_applicative p s))
         p)
-      (fn (xs,x) => rev(x::(rev xs)));
+      (fn (r, rs) => r @ [rs]);
 
 end;
 
