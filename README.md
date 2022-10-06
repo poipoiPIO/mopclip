@@ -103,7 +103,7 @@ val manyDigits = manyC digitP;
 
 > infix many1C : 'a parser -> 'a list parser
 
-It has the same behevior as the `manyC` combinator, but required at least one successful `'a parser` application to parse successefully
+It has the same behavior as the `manyC` combinator, but required at least one successful `'a parser` application to parse successefully
 
 ##### sepBy:
 > infix sepBy : 'a parser -> 'b parser -> 'a list parser
@@ -112,7 +112,7 @@ Parses sequence of parsers separated by the parser. For example, you might look 
 
 > infix sepBy1 : 'a parser -> 'b parser -> 'a list parser
 
-It has the same behevior as the `sepBy`, but required at least one sepBy unit to parse successefully
+It has the same behavior as the `sepBy`, but required at least one sepBy unit to parse successefully
 
 ##### Applicatives:
 Let's write some parsers using applicative operations!
