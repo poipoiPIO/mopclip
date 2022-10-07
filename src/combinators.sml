@@ -108,19 +108,18 @@ structure Combinators :> COMBINATORS = struct
   fun return (a: 'a) : 'a parser = 
     Parser (fn i => Success (a, i));
 
-  fun manyC (p: 'a parser): 'a list parser = Parser (fn i =>
-  let val xs = ref []
-      fun loop input =
+  fun manyC (p: 'a parser): 'a list parser =
+  Parser (fn i =>
+    let fun loop input res =
         case runParser p input of
-           Success (r, rest) => ( 
-             xs := r :: !xs;
-             loop rest
-           )
-         | Failure _ => input
-      val rest = loop i in
-        Success (rev (!xs), rest) 
-     end
+           Success (r, rest) => loop rest (r :: res)
+         | Failure _ => (res, input)
+        val rest = loop i []
+        val (result, r) = rest in
+          Success (rev result, r) 
+       end
   );
+
 
   fun many1C p = mapP_postfix
     (andThen_postfix p (manyC p))
