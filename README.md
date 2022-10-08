@@ -1,6 +1,6 @@
 <h2 align="center">
     <a href="https://github.com/poipoiPIO/mopclip" target="blank_">
-        <img height="150" alt="Mopclip" src="https://raw.githubusercontent.com/poipoiPIO/mopclip/place/res/logo.svg" />
+        <img height="150" alt="Mopclip" src="https://raw.githubusercontent.com/poipoiPIO/mopclip/place/res/New Projectqw.svg" />
     </a>
     <br>
     Mopclip : human-friendly monadic parser-combinator library
