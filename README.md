@@ -1,6 +1,10 @@
-# Mopclip
-
-_A parser combinator library for humans_
+<h2 align="center">
+    <a href="https://github.com/poipoiPIO/mopclip" target="blank_">
+        <img height="150" alt="Mopclip" src="https://raw.githubusercontent.com/poipoiPIO/mopclip/place/res/logo.svg" />
+    </a>
+    <br>
+    Mopclip : human-friendly monadic parser-combinator library
+</h2>
 
 ## Example:
 
