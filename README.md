@@ -12,9 +12,9 @@
 ```sml
 open Mopclip;
 
-- val cell = (manyC anyCharP) mapP implode;
-- val line = cell sepBy (charP #",");
-- val csv = line sepBy (charP #"\n");
+val cell = (manyC anyCharP) mapP implode;
+val line = cell sepBy (charP #",");
+val csv = line sepBy (charP #"\n");
 
 (* To apply this parser, we'll use runParser function *)
 runParser csv "meow,meow\nmeow,nmeow";
