@@ -41,7 +41,7 @@ simply parses character, for example: `val eol = charP #"\n";`
 ##### anyOf:
 > anyOf : char list -> char parser;
 
-Simply parses one of the characters in a list
+Simply parse one of the characters in a list
 
 ##### digitP:
 > digitP : char parser;
@@ -62,7 +62,7 @@ Parses string: `val meowP = stringP "meow";`
 ##### anyCharP:
 > anyCharP : char parser
 
-Parsing an alphabet character in any register
+Parse an alphabet character in any register
 
 
 ### Combinators:
@@ -112,11 +112,11 @@ It has the same behavior as the `manyC` combinator, but required at least one su
 ##### sepBy:
 > infix sepBy : 'a parser -> 'b parser -> 'a list parser
 
-Parses sequence of parsers separated by the parser. For example, you might look in the csv-parser example above.
+Parse sequence of parsers separated by the parser. As the demo, you might look in the csv-parser example above.
 
 > infix sepBy1 : 'a parser -> 'b parser -> 'a list parser
 
-It has the same behavior as the `sepBy`, but required at least one sepBy unit to parse successefully
+It has the same behavior as the `sepBy`, but required at least one sepBy unit to parse successfully
 
 ##### Applicatives:
 Let's write some parsers using applicative operations!
@@ -135,8 +135,8 @@ runParser digitArrayP "[1,2,3,]";
 
 > `p1 *> p2` - apply the first parser, apply the second parser, and return the result of the second one
 
-##### Monadic operation:
-Just a bunch of standard monadic operation needed to combine parsers
+##### Monadic operations:
+Just a bunch of standard monadic operations needed to combine parsers
 
 > infix >>= : 'a parser -> ('a -> 'b parser) -> 'b parser
 
