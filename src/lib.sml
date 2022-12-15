@@ -1,6 +1,7 @@
 
 infix mapP    fun p1 mapP p2    = Combinators.mapP_postfix p1 p2;
 infix orElse  fun p1 orElse p2  = Combinators.orElse_postfix p1 p2;
+infix orElseL fun p1 orElseL p2 = Combinators.orElse_postfix_rec p1 p2;
 infix andThen fun p1 andThen p2 = Combinators.andThen_postfix p1 p2;
 infix >>      fun p1 >> p2      = Combinators.pass_bind p1 p2;
 infix >>=     fun p1 >>= p2     = Combinators.bind p1 p2;

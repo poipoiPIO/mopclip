@@ -4,6 +4,7 @@ signature COMBINATORS = sig
   val andThen_postfix : 'a parser -> 'b parser -> ('a * 'b) parser
   val mapP_postfix : 'a parser -> ('a -> 'b) -> 'b parser
   val orElse_postfix : 'a parser -> 'a parser -> 'a parser
+  val orElse_postfix_rec : (unit ->'a parser) -> (unit -> 'a parser) -> 'a parser
   val errorC : string -> 'a parser -> 'a parser
   val left_applicative : 'a parser -> 'b parser -> 'a parser
   val right_applicative : 'a parser -> 'b parser -> 'b parser
@@ -51,6 +52,20 @@ structure Combinators :> COMBINATORS = struct
            Success (r, rs) => firstRes  
          | Failure err => let
             val secondRes = runParser p2 input in
+            case secondRes of 
+               Failure err => Failure err
+             | Success (r,rs) => secondRes
+          end
+    end in Parser inner
+  end;
+
+  fun orElse_postfix_rec (p1: unit -> 'a parser) (p2: unit -> 'a parser) =
+    let fun inner input = let
+      val firstRes = runParser (p1 ()) input in
+        case firstRes of 
+           Success (r, rs) => firstRes  
+         | Failure err => let
+            val secondRes = runParser (p2 ()) input in
             case secondRes of 
                Failure err => Failure err
              | Success (r,rs) => secondRes

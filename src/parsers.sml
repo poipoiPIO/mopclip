@@ -4,7 +4,7 @@ open Combinators;
 
 signature PARSERS = sig
   val charP : char -> char parser
-  val choice : 'a parser list -> 'a parser
+  val choice  : 'a parser list -> 'a parser
   val anyOf : char list -> char parser
   val digitP : char parser
   val concatRes : 'a list parser -> 'a list parser -> 'a list parser
