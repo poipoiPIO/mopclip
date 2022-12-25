@@ -133,6 +133,8 @@ Let's write some parsers using applicative operations!
       <* (charP #"]"))
       mapP (map (fn c => (ord c) - 48));
 
+
+##### Applicatives:
 runParser digitArrayP "[1,2,3,]";
 - val it = Success ([1,2,3],"")
 ```
@@ -148,3 +150,6 @@ Just a bunch of standard monadic operations needed to combine parsers
 
 > infix >>> : 'a parser -> 'b parser -> 'b parser
 
+
+##### Simple interpreter using Mopclip:
+https://gist.github.com/poipoiPIO/e202cba9d08dfa4d7a3b9556384950ee
