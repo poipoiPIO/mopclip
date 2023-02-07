@@ -91,6 +91,12 @@ Sequentially run parsers and returns the result of parser application
 
 Run the first parser and if it fails return the result of the second one
 
+> infix orElseL : (unit -> 'a parser) -> (unit -> 'a parser) -> 'a parser
+
+Run the first parser and if it fails return the result of the second one
+Similar to orElse parser, but uses arguments wrapped in the lambda abstraction for
+lazy-semantics needed for combinators recursion.
+
 ##### mapP:
 > infix mapP : 'a parser -> ('a -> 'b) -> 'b parser
 
@@ -105,7 +111,7 @@ Applies parser as many as it succeeds and returns the list of results as the res
 val manyDigits = manyC digitP;
 ```
 
-> infix many1C : 'a parser -> 'a list parser
+> many1C : 'a parser -> 'a list parser
 
 It has the same behavior as the `manyC` combinator, but required at least one successful `'a parser` application to parse successefully
 
@@ -127,6 +133,8 @@ Let's write some parsers using applicative operations!
       <* (charP #"]"))
       mapP (map (fn c => (ord c) - 48));
 
+
+##### Applicatives:
 runParser digitArrayP "[1,2,3,]";
 - val it = Success ([1,2,3],"")
 ```
@@ -142,3 +150,6 @@ Just a bunch of standard monadic operations needed to combine parsers
 
 > infix >>> : 'a parser -> 'b parser -> 'b parser
 
+
+##### Simple interpreter using Mopclip:
+https://gist.github.com/poipoiPIO/e202cba9d08dfa4d7a3b9556384950ee
