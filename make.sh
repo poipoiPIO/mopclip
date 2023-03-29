@@ -1,11 +1,11 @@
-if [ $1 == "--interactive" ]
+LIB=lib/github.com/poipoiPIO/mopclip 
+
+if [ $1 == "-i" ]
 then
-  rlwrap smlnj src/helpers.sml src/types.sml src/combinators.sml src/parsers.sml src/lib.sml
+  rlwrap smlnj $LIB/helpers.sml $LIB/types.sml $LIB/combinators.sml $LIB/parsers.sml $LIB/lib.sml 
 fi
 
-if [ $1 == "--mlb" ] 
+if [ $1 == "--mlton" ] 
 then
-  ./third-party/sml-buildscripts/smlrepl src/mopclip.mlb
-else
-  mlton -output ./o.out src/mopclip.mlb 
+  mlton -output ./mopclip.out $LIB/mopclip.mlb 
 fi
