@@ -21,6 +21,30 @@ runParser csv "meow,meow\nmeow,nmeow";
 - val it = Success ([["meow","meow"],["meow","nmeow"]],"")
 ```
 
+## Overview of MLB files
+
+- `lib/github.com/poipoiPIO/mopclip/mopclip.mlb`:
+
+  - **signature** [`Mopclip`](lib/github.com/poipoiPIO/mopclip/lib.sml)
+
+## Use of the package
+
+This library is set up to work well with the SML package manager
+[smlpkg](https://github.com/diku-dk/smlpkg).  To use the package, in
+the root of your project directory, execute the command:
+
+```
+$ smlpkg add github.com/poipoiPIO/mopclip
+```
+And then sync your packages locally using the following command:
+
+```
+$ smlpkg sync
+```
+
+You can now reference the `mlb`-file using relative paths from within
+your project's `mlb`-files.
+
 ## API reference:
 ### Types:
 ##### pResult:
